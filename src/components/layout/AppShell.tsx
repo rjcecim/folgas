@@ -13,7 +13,7 @@ import { EventDialog } from "@/features/events/EventDialog";
 import { EventFilters, type EventFilterState } from "@/features/events/EventFilters";
 import { OpportunitiesCard } from "@/features/opportunities/OpportunitiesCard";
 import { UpcomingTrips } from "@/features/trips/UpcomingTrips";
-import { DEFAULT_CALENDAR_YEAR } from "@/lib/constants";
+import { DEFAULT_CALENDAR_YEAR, calendarYears } from "@/lib/constants";
 import { removeEvent, saveEvent, watchEvents } from "@/lib/firebase/events";
 import { saveBankHours, watchBankHours } from "@/lib/firebase/settings";
 import { removeTrip, syncTripFromEvent } from "@/lib/firebase/trips";
@@ -84,6 +84,13 @@ export function AppShell() {
   const upcomingTrips = events
     .filter((event) => event.type === "trip" && event.endDate >= today)
     .slice(0, 5);
+  const years = useMemo(() => {
+    const fromEvents = events.flatMap((event) => [
+      Number(event.startDate.slice(0, 4)),
+      Number(event.endDate.slice(0, 4)),
+    ]);
+    return calendarYears(fromEvents.filter((year) => Number.isFinite(year)));
+  }, [events]);
   const opportunities = findFreeOpportunities(events, filters.year, today);
 
   async function persistEvent(input: CalendarEventInput, current?: CalendarEvent) {
@@ -147,7 +154,7 @@ export function AppShell() {
           <UpcomingList
             title="Próximos dias sem expediente"
             events={upcomingOffDays}
-            empty="Nenhum dia oficial à frente."
+            empty="Nenhum dia sem expediente à frente."
             onSelect={(event) => setDialog({ mode: "details", event })}
           />
           <UpcomingList
@@ -168,6 +175,7 @@ export function AppShell() {
           <div className="mb-5 space-y-4">
             <EventFilters
               value={filters}
+              years={years}
               onChange={(next) => {
                 setFilters(next);
                 if (next.year !== filters.year) {
@@ -175,6 +183,10 @@ export function AppShell() {
                 }
               }}
             />
+            <p className="text-sm text-mute">
+              Todos os dias são seus. Crie, edite ou exclua, inclusive os do ano que vem, em Novo
+              evento.
+            </p>
             <Legend />
           </div>
           <CalendarMonth
@@ -184,6 +196,7 @@ export function AppShell() {
             onYearChange={(year) => setFilters((current) => ({ ...current, year }))}
             onMonthChange={setMonth}
             onSelectEvent={(event) => setDialog({ mode: "details", event })}
+            years={years}
           />
         </Card>
       </main>

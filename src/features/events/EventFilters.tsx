@@ -1,7 +1,7 @@
 "use client";
 
 import { EVENT_STATUSES, EVENT_TYPES, type EventStatus, type EventType } from "@/types";
-import { STATUS_LABELS, TYPE_LABELS } from "@/lib/constants";
+import { STATUS_LABELS, TYPE_LABELS, calendarYears } from "@/lib/constants";
 import { Field, Select } from "@/components/ui/Field";
 
 export interface EventFilterState {
@@ -13,10 +13,13 @@ export interface EventFilterState {
 export function EventFilters({
   value,
   onChange,
+  years,
 }: {
   value: EventFilterState;
   onChange: (value: EventFilterState) => void;
+  years?: number[];
 }) {
+  const yearOptions = years && years.length > 0 ? years : calendarYears();
   return (
     <div className="grid gap-3 sm:grid-cols-3">
       <Field label="Ano">
@@ -24,7 +27,7 @@ export function EventFilters({
           value={value.year}
           onChange={(event) => onChange({ ...value, year: Number(event.target.value) })}
         >
-          {[2025, 2026, 2027, 2028].map((year) => (
+          {yearOptions.map((year) => (
             <option key={year} value={year}>
               {year}
             </option>

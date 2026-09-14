@@ -10,7 +10,7 @@ export function AppHeader({ onCreate }: { onCreate: () => void }) {
     <header className="border-b border-line bg-cream/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <div>
-          <p className="text-xs uppercase tracking-[0.28em] text-terra"> · </p>
+          <p className="text-xs uppercase tracking-[0.28em] text-terra">Agenda pessoal</p>
           <h1 className="font-serif text-3xl text-ink">Folgas</h1>
         </div>
         <div className="flex flex-wrap items-center gap-2">

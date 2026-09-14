@@ -24,12 +24,11 @@ export function EventDetails({
         </span>
         <span
           className={`rounded-full px-3 py-1 text-xs font-medium ${
-            event.official ? "bg-ink text-cream" : "border border-dashed border-ink/40 text-ink"
+            event.status === "planned"
+              ? "border border-dashed border-ink/40 text-ink"
+              : "bg-ink text-cream"
           }`}
         >
-          {event.official ? "Oficial" : "Planejado"}
-        </span>
-        <span className="rounded-full bg-sand px-3 py-1 text-xs text-ink">
           {STATUS_LABELS[event.status]}
         </span>
       </div>

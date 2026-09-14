@@ -23,7 +23,6 @@ export function EventForm({
   const [endDate, setEndDate] = useState(currentEvent?.endDate ?? currentEvent?.startDate ?? "");
   const [type, setType] = useState(currentEvent?.type ?? "bank_hours_leave");
   const [nature, setNature] = useState(currentEvent?.nature ?? NATURE_DEFAULTS.bank_hours_leave);
-  const [official, setOfficial] = useState(currentEvent?.official ?? false);
   const [status, setStatus] = useState(currentEvent?.status ?? "planned");
   const [hours, setHours] = useState(
     currentEvent ? Math.abs(currentEvent.bankHoursImpact) : dailyWorkHours,
@@ -55,7 +54,7 @@ export function EventForm({
           endDate: endDate || startDate,
           type,
           nature,
-          official,
+          official: false,
           status,
           hours,
           includeInProjection: usesBank ? includeInProjection : false,
@@ -82,7 +81,7 @@ export function EventForm({
             endDate: parsed.data.endDate,
             type: parsed.data.type,
             nature: parsed.data.nature,
-            official: parsed.data.official,
+            official: false,
             status: parsed.data.status,
             bankHoursImpact: computedImpact,
             includeInProjection: parsed.data.includeInProjection,
@@ -165,15 +164,7 @@ export function EventForm({
           </label>
         </div>
       ) : null}
-      <label className="flex items-center gap-2 text-sm text-ink">
-        <input
-          type="checkbox"
-          checked={official}
-          onChange={(event) => setOfficial(event.target.checked)}
-        />
-        Evento oficial
-      </label>
-      <Field label="Fundamento legal">
+      <Field label="Referência">
         <Input value={legalBasis} onChange={(event) => setLegalBasis(event.target.value)} />
       </Field>
       <Field label="Observações">

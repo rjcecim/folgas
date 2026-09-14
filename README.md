@@ -1,17 +1,15 @@
 # Folgas
 
-Aplicação pessoal para planejar dias sem expediente, banco de horas e viagens.
+Agenda pessoal para planejar dias sem expediente, banco de horas e viagens.
 
-O calendário oficial inicial de 2026 foi construído **exclusivamente** a partir da **Portaria nº 45.223, de 09 de janeiro de 2026, do Tribunal de Contas do Estado do Pará ()**. Nenhum feriado extra, calendário federal, API ou fonte externa foi usado.
+Os dias do calendário são cadastrados por você. Podem ser editados, excluídos ou ampliados para outros anos a qualquer momento.
 
 ## Objetivo
 
 Registrar e visualizar:
 
-- feriados nacionais e municipais da Portaria;
-- pontos facultativos;
-- suspensões de expediente do art. 2º;
-- recesso regimental;
+- dias sem expediente;
+- feriados e pontos facultativos que você cadastrar;
 - folgas com banco de horas;
 - créditos futuros de banco de horas;
 - viagens.
@@ -50,7 +48,7 @@ src/
     validation/        schemas Zod
     utils/             datas, projeção e oportunidades
   types/               contratos de dados
-scripts/               seed oficial (somente terminal)
+scripts/               seed inicial (somente terminal)
 ```
 
 A interface, o Firebase, as regras de negócio, a validação, os tipos e os utilitários ficam separados.
@@ -93,12 +91,12 @@ Coleções:
 | `title` | título |
 | `startDate` / `endDate` | datas ISO `YYYY-MM-DD` |
 | `type` | tipo do evento |
-| `nature` | natureza jurídica/descritiva |
-| `official` | origem oficial da Portaria |
-| `status` | `official`, `planned` ou `confirmed` |
+| `nature` | descrição do dia |
+| `official` | legado interno; novos registros ficam `false` |
+| `status` | `planned`, `confirmed` ou `official` |
 | `bankHoursImpact` | impacto em horas |
 | `includeInProjection` | entra no saldo projetado |
-| `legalBasis` | fundamento |
+| `legalBasis` | referência livre |
 | `notes` | observações |
 | `createdAt` / `updatedAt` | timestamps do Firestore |
 
@@ -125,15 +123,15 @@ saldoProjetado = saldoAtual + soma dos impactos com includeInProjection
 Arquivo: `scripts/seed-events.ts`
 
 - idempotente
-- usa ids estáveis (`old-2026-02-16`, etc.)
 - não fica exposto no site
 - não depende do frontend
+- serve só para popular um conjunto inicial de dias pessoais
 
 ```bash
 npm run seed
 ```
 
-São **20** registros oficiais da Portaria nº 45.223/2026: 16 do art. 1º (incluindo o recesso em intervalo) e 4 suspensões do art. 2º. As suspensões **não** são classificadas como ponto facultativo.
+Novos anos devem ser cadastrados pelo próprio aplicativo, em **Novo evento**.
 
 ## Execução local
 

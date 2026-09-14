@@ -22,9 +22,9 @@ function coversDate(event: CalendarEvent, date: string) {
   return date >= event.startDate && date <= event.endDate;
 }
 
-function isOfficialFree(events: CalendarEvent[], date: string) {
+function isKnownOffDay(events: CalendarEvent[], date: string) {
   return events.some(
-    (event) => event.official && OFFICIAL_FREE_TYPES.has(event.type) && coversDate(event, date),
+    (event) => OFFICIAL_FREE_TYPES.has(event.type) && coversDate(event, date),
   );
 }
 
@@ -35,7 +35,7 @@ function bankLeaveCost(events: CalendarEvent[], date: string) {
 }
 
 function isFreeDay(events: CalendarEvent[], date: string) {
-  return isWeekend(date) || isOfficialFree(events, date) || bankLeaveCost(events, date) > 0;
+  return isWeekend(date) || isKnownOffDay(events, date) || bankLeaveCost(events, date) > 0;
 }
 
 export function findFreeOpportunities(

@@ -2,7 +2,7 @@
 
 import type { CalendarEvent } from "@/types";
 import { Button } from "@/components/ui/Button";
-import { MONTH_LABELS, WEEKDAY_LABELS } from "@/lib/constants";
+import { MONTH_LABELS, WEEKDAY_LABELS, calendarYears } from "@/lib/constants";
 import { daysInMonthGrid, isDateInRange } from "@/lib/utils/dates";
 import { CalendarDay } from "./CalendarDay";
 
@@ -13,6 +13,7 @@ export function CalendarMonth({
   onYearChange,
   onMonthChange,
   onSelectEvent,
+  years,
 }: {
   year: number;
   month: number;
@@ -20,7 +21,9 @@ export function CalendarMonth({
   onYearChange: (year: number) => void;
   onMonthChange: (month: number) => void;
   onSelectEvent: (event: CalendarEvent) => void;
+  years?: number[];
 }) {
+  const yearOptions = years && years.length > 0 ? years : calendarYears([year]);
   const cells = daysInMonthGrid(year, month);
 
   const goMonth = (delta: number) => {
@@ -54,7 +57,7 @@ export function CalendarMonth({
             value={year}
             onChange={(event) => onYearChange(Number(event.target.value))}
           >
-            {[2025, 2026, 2027, 2028].map((value) => (
+            {yearOptions.map((value) => (
               <option key={value} value={value}>
                 {value}
               </option>

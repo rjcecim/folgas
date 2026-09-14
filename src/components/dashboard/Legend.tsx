@@ -27,7 +27,7 @@ export function Legend() {
         </span>
       ))}
       <span className="inline-flex items-center rounded-full bg-ink px-3 py-1 text-xs text-cream">
-        Oficial
+        Confirmado
       </span>
       <span className="inline-flex items-center rounded-full border border-dashed border-ink/40 px-3 py-1 text-xs text-ink">
         Planejado

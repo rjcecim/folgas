@@ -35,10 +35,19 @@ export const NATURE_DEFAULTS: Record<EventType, string> = {
 };
 
 export const STATUS_LABELS: Record<EventStatus, string> = {
-  official: "Oficial",
+  official: "Cadastrado",
   planned: "Planejado",
   confirmed: "Confirmado",
 };
+
+export function calendarYears(extraYears: number[] = []) {
+  const current = new Date().getFullYear();
+  const years = new Set<number>(extraYears);
+  for (let year = current - 1; year <= current + 6; year += 1) {
+    years.add(year);
+  }
+  return [...years].sort((a, b) => a - b);
+}
 
 export const WEEKDAY_LABELS = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 

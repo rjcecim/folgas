@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
-import { OFF_DAYS_2026 } from "./official-old-2026";
+import { LEGACY_EVENT_IDS, OFF_DAYS_2026 } from "./off-days-2026";
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "folgas-rjcecim";
 const require = createRequire(import.meta.url);
@@ -14,6 +14,24 @@ function toFirestoreFields(data: Record<string, string | number | boolean>) {
     else fields[key] = { stringValue: value };
   }
   return fields;
+}
+
+function personalPayload(event: (typeof OFF_DAYS_2026)[number], now: string, exists: boolean) {
+  return {
+    title: event.title,
+    startDate: event.startDate,
+    endDate: event.endDate,
+    type: event.type,
+    nature: event.nature,
+    official: false,
+    status: "confirmed",
+    bankHoursImpact: 0,
+    includeInProjection: false,
+    legalBasis: "",
+    notes: "",
+    updatedAtIso: now,
+    ...(exists ? {} : { createdAtIso: now }),
+  };
 }
 
 async function seedWithCli() {
@@ -43,39 +61,31 @@ async function seedWithCli() {
   const root = `projects/${PROJECT_ID}/databases/(default)/documents`;
   let created = 0;
   let updated = 0;
+  let removed = 0;
 
   for (const event of OFF_DAYS_2026) {
     const name = `${root}/events/${event.id}`;
-    let existingNotes = event.notes;
     let exists = false;
     try {
-      const current = await client.get(`/${name}`);
+      await client.get(`/${name}`);
       exists = true;
-      existingNotes = current.body.fields?.notes?.stringValue ?? event.notes;
     } catch {
       exists = false;
     }
 
     const now = new Date().toISOString();
-    const payload = {
-      title: event.title,
-      startDate: event.startDate,
-      endDate: event.endDate,
-      type: event.type,
-      nature: event.nature,
-      official: true,
-      status: "official",
-      bankHoursImpact: 0,
-      includeInProjection: false,
-      legalBasis: event.legalBasis,
-      notes: existingNotes,
-      updatedAtIso: now,
-      ...(exists ? {} : { createdAtIso: now }),
-    };
-
-    await client.patch(`/${name}`, { fields: toFirestoreFields(payload) });
+    await client.patch(`/${name}`, { fields: toFirestoreFields(personalPayload(event, now, exists)) });
     if (exists) updated += 1;
     else created += 1;
+  }
+
+  for (const id of LEGACY_EVENT_IDS) {
+    try {
+      await client.delete(`/${root}/events/${id}`);
+      removed += 1;
+    } catch {
+      // já removido
+    }
   }
 
   const settingsName = `${root}/settings/bankHours`;
@@ -91,7 +101,7 @@ async function seedWithCli() {
     });
   }
 
-  return { created, updated };
+  return { created, updated, removed };
 }
 
 async function seedWithAdmin() {
@@ -114,6 +124,7 @@ async function seedWithAdmin() {
   const db = getFirestore();
   let created = 0;
   let updated = 0;
+  let removed = 0;
 
   for (const event of OFF_DAYS_2026) {
     const ref = db.collection("events").doc(event.id);
@@ -124,12 +135,12 @@ async function seedWithAdmin() {
       endDate: event.endDate,
       type: event.type,
       nature: event.nature,
-      official: true,
-      status: "official",
+      official: false,
+      status: "confirmed",
       bankHoursImpact: 0,
       includeInProjection: false,
-      legalBasis: event.legalBasis,
-      notes: current.exists ? String(current.get("notes") ?? event.notes) : event.notes,
+      legalBasis: "",
+      notes: "",
       updatedAt: FieldValue.serverTimestamp(),
       updatedAtIso: new Date().toISOString(),
     };
@@ -147,6 +158,14 @@ async function seedWithAdmin() {
     }
   }
 
+  for (const id of LEGACY_EVENT_IDS) {
+    const ref = db.collection("events").doc(id);
+    if ((await ref.get()).exists) {
+      await ref.delete();
+      removed += 1;
+    }
+  }
+
   const settingsRef = db.collection("settings").doc("bankHours");
   if (!(await settingsRef.get()).exists) {
     await settingsRef.set({
@@ -157,11 +176,11 @@ async function seedWithAdmin() {
     });
   }
 
-  return { created, updated };
+  return { created, updated, removed };
 }
 
 async function seed() {
-  let result: { created: number; updated: number };
+  let result: { created: number; updated: number; removed: number };
   try {
     result = await seedWithAdmin();
     console.log("Seed via Firebase Admin.");
@@ -170,9 +189,10 @@ async function seed() {
     console.log("Seed via Firebase CLI.");
   }
 
-  console.log(`Eventos oficiais processados: ${OFF_DAYS_2026.length}`);
+  console.log(`Dias pessoais processados: ${OFF_DAYS_2026.length}`);
   console.log(`Criados: ${result.created}`);
   console.log(`Atualizados: ${result.updated}`);
+  console.log(`IDs antigos removidos: ${result.removed}`);
 }
 
 seed().catch((error) => {

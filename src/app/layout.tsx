@@ -15,7 +15,7 @@ const sans = Source_Sans_3({
 export const metadata: Metadata = {
   title: "Folgas",
   description:
-    "Planejamento pessoal de folgas, banco de horas e viagens com o calendário oficial do  de 2026.",
+    "Agenda pessoal de folgas, banco de horas e viagens.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

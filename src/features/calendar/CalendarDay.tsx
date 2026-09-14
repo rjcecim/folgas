@@ -30,11 +30,6 @@ export function CalendarDay({
         <span className={`text-sm ${isToday ? "font-semibold text-terra" : "text-ink"}`}>
           {dayNumber}
         </span>
-        {events.some((event) => event.official) ? (
-          <span className="rounded-full bg-ink px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-cream">
-            Oficial
-          </span>
-        ) : null}
       </div>
       <div className="space-y-1">
         {events.slice(0, 3).map((event) => (

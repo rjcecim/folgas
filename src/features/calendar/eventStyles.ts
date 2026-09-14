@@ -52,7 +52,7 @@ export const TYPE_STYLES: Record<
 };
 
 export function eventTone(event: CalendarEvent) {
-  return event.official
-    ? "border-transparent"
-    : "border-dashed border-ink/30 bg-white/70";
+  return event.status === "planned"
+    ? "border-dashed border-ink/30 bg-white/70"
+    : "border-transparent";
 }
