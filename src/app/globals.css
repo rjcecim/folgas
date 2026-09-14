@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-cream: #f4efe6;
+  --color-sand: #ebe2d4;
+  --color-ink: #241c15;
+  --color-mute: #6d6258;
+  --color-line: #d8cfc2;
+  --color-terra: #9a4a2a;
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+}
+
+html,
+body {
+  background: var(--color-cream);
+}
+
+body {
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+}
+
+.font-serif {
+  font-family: var(--font-serif), Georgia, serif;
+}
