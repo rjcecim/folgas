@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Providers } from "@/components/layout/Providers";
+import { Outfit } from "next/font/google";
+import { Providers } from "@/frontend/providers";
 import "./globals.css";
 
-const sans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const mono = Geist_Mono({
-  variable: "--font-geist-mono",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
@@ -20,8 +15,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${mono.variable} h-full`}>
-      <body className="min-h-full bg-cream font-sans text-ink antialiased">
+    <html lang="pt-BR" className={`${outfit.variable} h-full`}>
+      <body className="min-h-full bg-page font-sans text-ink antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

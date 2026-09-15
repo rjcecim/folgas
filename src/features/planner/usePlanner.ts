@@ -9,7 +9,7 @@ import { removeTrip, syncTripFromEvent } from "@/lib/firebase/trips";
 import { todayISO } from "@/lib/utils/dates";
 import { findFreeOpportunities } from "@/lib/utils/opportunities";
 import { projectBankHours } from "@/lib/utils/projection";
-import type { EventFilterState } from "@/features/events/EventFilters";
+import type { EventFilterState } from "@/types";
 
 const OFF_TYPES = new Set([
   "national_holiday",

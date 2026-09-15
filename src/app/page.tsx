@@ -1,10 +1,10 @@
-import { AuthGate } from "@/components/layout/AuthGate";
-import { DashboardPage } from "@/components/dashboard/DashboardPage";
+import { Gate } from "@/frontend/gate";
+import { HomeScreen } from "@/frontend/home";
 
 export default function Home() {
   return (
-    <AuthGate>
-      <DashboardPage />
-    </AuthGate>
+    <Gate>
+      <HomeScreen />
+    </Gate>
   );
 }

@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import type { BankHoursSettings } from "@/types";
-import { Button } from "@/components/ui/Button";
-import { Field, Input } from "@/components/ui/Field";
 import { bankHoursSchema } from "@/lib/validation/bankHours";
+import { Btn, Field, Input } from "./ui";
 
-export function BankHoursForm({
+export function BankForm({
   settings,
   onSave,
 }: {
@@ -23,10 +22,7 @@ export function BankHoursForm({
       className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end"
       onSubmit={async (event) => {
         event.preventDefault();
-        const parsed = bankHoursSchema.safeParse({
-          currentBalanceHours,
-          dailyWorkHours,
-        });
+        const parsed = bankHoursSchema.safeParse({ currentBalanceHours, dailyWorkHours });
         if (!parsed.success) {
           setError(parsed.error.issues[0]?.message ?? "Dados inválidos.");
           return;
@@ -56,11 +52,11 @@ export function BankHoursForm({
           onChange={(event) => setDailyWorkHours(Number(event.target.value))}
         />
       </Field>
-      <Button type="submit" disabled={saving}>
-        {saving ? "Salvando..." : "Atualizar saldo"}
-      </Button>
+      <Btn type="submit" disabled={saving}>
+        {saving ? "Salvando..." : "Atualizar"}
+      </Btn>
       {error && !error.includes("saldo") ? (
-        <p className="text-sm text-red-400 sm:col-span-3">{error}</p>
+        <p className="text-sm text-red-600 sm:col-span-3">{error}</p>
       ) : null}
     </form>
   );

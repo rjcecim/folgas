@@ -2,12 +2,11 @@
 
 import { useMemo, useState } from "react";
 import { EVENT_STATUSES, EVENT_TYPES, type CalendarEvent, type CalendarEventInput } from "@/types";
-import { Button } from "@/components/ui/Button";
-import { Field, Input, Select, Textarea } from "@/components/ui/Field";
 import { NATURE_DEFAULTS, STATUS_LABELS, TYPE_LABELS } from "@/lib/constants";
 import { eventFormSchema } from "@/lib/validation/event";
+import { Btn, Field, Input, Select, Textarea } from "./ui";
 
-export function EventForm({
+export function DayForm({
   event: currentEvent,
   dailyWorkHours,
   onSubmit,
@@ -154,7 +153,7 @@ export function EventForm({
               onChange={(event) => setHours(Number(event.target.value))}
             />
           </Field>
-          <label className="flex items-end gap-2 pb-2 text-sm text-ink">
+          <label className="flex items-end gap-2 pb-2 text-sm">
             <input
               type="checkbox"
               checked={includeInProjection}
@@ -171,12 +170,12 @@ export function EventForm({
         <Textarea value={notes} onChange={(event) => setNotes(event.target.value)} />
       </Field>
       <div className="flex flex-wrap justify-end gap-2 pt-2">
-        <Button variant="secondary" onClick={onCancel}>
+        <Btn tone="quiet" onClick={onCancel}>
           Cancelar
-        </Button>
-        <Button type="submit" disabled={saving}>
+        </Btn>
+        <Btn type="submit" disabled={saving}>
           {saving ? "Salvando..." : "Salvar"}
-        </Button>
+        </Btn>
       </div>
     </form>
   );

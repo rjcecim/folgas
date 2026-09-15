@@ -1,16 +1,10 @@
 "use client";
 
-import { EVENT_STATUSES, EVENT_TYPES, type EventStatus, type EventType } from "@/types";
+import { EVENT_STATUSES, EVENT_TYPES, type EventFilterState } from "@/types";
 import { STATUS_LABELS, TYPE_LABELS, calendarYears } from "@/lib/constants";
-import { Field, Select } from "@/components/ui/Field";
+import { Field, Select } from "./ui";
 
-export interface EventFilterState {
-  year: number;
-  type: EventType | "all";
-  status: EventStatus | "all";
-}
-
-export function EventFilters({
+export function Filters({
   value,
   onChange,
   years,
@@ -20,6 +14,7 @@ export function EventFilters({
   years?: number[];
 }) {
   const yearOptions = years && years.length > 0 ? years : calendarYears();
+
   return (
     <div className="grid gap-3 sm:grid-cols-3">
       <Field label="Ano">

@@ -1,13 +1,13 @@
 import { Suspense } from "react";
-import { AuthGate } from "@/components/layout/AuthGate";
-import { CadastroPage } from "@/components/dashboard/CadastroPage";
+import { Gate } from "@/frontend/gate";
+import { ManageScreen } from "@/frontend/manage";
 
 export default function Cadastro() {
   return (
-    <AuthGate>
-      <Suspense fallback={<main className="grid min-h-screen place-items-center text-sm text-mute">Abrindo...</main>}>
-        <CadastroPage />
+    <Gate>
+      <Suspense fallback={<main className="grid min-h-screen place-items-center text-soft">Abrindo...</main>}>
+        <ManageScreen />
       </Suspense>
-    </AuthGate>
+    </Gate>
   );
 }
