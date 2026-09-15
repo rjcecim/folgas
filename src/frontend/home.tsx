@@ -96,7 +96,7 @@ export function HomeScreen() {
                     <button
                       type="button"
                       onClick={() => setSelected(event)}
-                      className="flex w-full items-center gap-3 rounded-2xl px-1 py-2 text-left hover:bg-white"
+                      className="flex w-full items-center gap-3 rounded-2xl px-1 py-2 text-left hover:bg-well"
                     >
                       <span
                         className="h-2.5 w-2.5 shrink-0 rounded-full"
@@ -124,7 +124,7 @@ export function HomeScreen() {
                 {planner.opportunities.map((period) => (
                   <li
                     key={`${period.kind}-${period.startDate}-${period.endDate}`}
-                    className="rounded-2xl bg-white px-4 py-3"
+                    className="rounded-2xl bg-well px-4 py-3"
                   >
                     <p className="font-medium">{period.title}</p>
                     <p className="mt-1 text-sm text-soft">

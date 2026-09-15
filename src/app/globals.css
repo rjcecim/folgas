@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-page: #eef1f6;
+  --color-page: #ffffff;
   --color-panel: #ffffff;
-  --color-ink: #0c1222;
-  --color-soft: #5b6475;
-  --color-hair: #d5dbe8;
+  --color-well: #f4f6f8;
+  --color-ink: #171717;
+  --color-soft: #5c6370;
+  --color-hair: #e6e8ee;
   --color-accent: #2f6bff;
-  --color-accent-soft: #e8efff;
+  --color-accent-soft: #eaf0ff;
   --font-sans: var(--font-outfit);
 }
 
@@ -18,9 +19,15 @@ html {
 html,
 body {
   min-height: 100%;
-  background: #eef1f6;
+  background: #ffffff;
 }
 
 body {
   font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+}
+
+input,
+select,
+textarea {
+  color-scheme: light;
 }

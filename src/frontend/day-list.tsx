@@ -22,7 +22,7 @@ export function DayList({
   return (
     <ul className="space-y-2">
       {events.map((event) => (
-        <li key={event.id} className="rounded-3xl bg-page px-4 py-3">
+        <li key={event.id} className="rounded-3xl bg-white px-4 py-3">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <p className="font-medium">{event.title}</p>

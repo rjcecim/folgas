@@ -31,7 +31,7 @@ export function ManageScreen() {
 
         {planner.error ? <p className="text-sm text-red-600">{planner.error}</p> : null}
 
-        <section className="rounded-[28px] bg-white p-5 sm:p-6">
+        <section className="rounded-[28px] bg-well p-5 sm:p-6">
           <h2 className="mb-4 text-sm text-soft">Banco de horas</h2>
           {planner.settings ? (
             <BankForm
@@ -45,7 +45,7 @@ export function ManageScreen() {
         </section>
 
         <div className="grid gap-6 xl:grid-cols-2">
-          <section className="rounded-[28px] bg-white p-5 sm:p-6">
+          <section className="rounded-[28px] bg-well p-5 sm:p-6">
             <h2 className="mb-4 text-sm text-soft">{editing ? "Editar dia" : "Novo dia"}</h2>
             <DayForm
               key={editing?.id ?? "new"}
@@ -59,7 +59,7 @@ export function ManageScreen() {
             />
           </section>
 
-          <section className="rounded-[28px] bg-white p-5 sm:p-6">
+          <section className="rounded-[28px] bg-well p-5 sm:p-6">
             <h2 className="mb-4 text-sm text-soft">Lista</h2>
             <div className="mb-4">
               <Filters value={planner.filters} years={planner.years} onChange={planner.setFilters} />

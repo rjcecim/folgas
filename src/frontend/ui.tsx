@@ -10,8 +10,8 @@ type Tone = "primary" | "quiet" | "ghost" | "danger";
 
 const tones: Record<Tone, string> = {
   primary: "bg-accent text-white hover:bg-blue-600",
-  quiet: "bg-white text-ink ring-1 ring-hair hover:bg-page",
-  ghost: "bg-transparent text-soft hover:bg-white hover:text-ink",
+  quiet: "bg-white text-ink ring-1 ring-hair hover:bg-well",
+  ghost: "bg-transparent text-soft hover:bg-well hover:text-ink",
   danger: "bg-red-50 text-red-600 hover:bg-red-100",
 };
 
@@ -49,7 +49,7 @@ export function Field({
 }
 
 const box =
-  "w-full rounded-2xl border-0 bg-page px-3 py-2.5 text-sm text-ink outline-none ring-1 ring-transparent transition placeholder:text-soft/70 focus:bg-white focus:ring-accent";
+  "w-full rounded-2xl border-0 bg-well px-3 py-2.5 text-sm text-ink outline-none ring-1 ring-transparent transition placeholder:text-soft/70 focus:bg-white focus:ring-accent";
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={box} {...props} />;
@@ -73,7 +73,7 @@ export function Sheet({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#0c1222]/40 p-3 sm:items-center">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/20 p-3 sm:items-center">
       <button type="button" className="absolute inset-0" aria-label="Fechar" onClick={onClose} />
       <div className="relative max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-[28px] bg-panel p-6 shadow-2xl">
         <div className="mb-5 flex items-start justify-between gap-3">

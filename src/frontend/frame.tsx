@@ -17,12 +17,12 @@ export function Frame({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-40 bg-page/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-hair bg-white/90 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link href="/" className="text-lg font-semibold tracking-tight">
             Folgas
           </Link>
-          <nav className="flex rounded-full bg-white p-1 ring-1 ring-hair">
+          <nav className="flex rounded-full bg-well p-1">
             {tabs.map((tab) => {
               const active = tab.href === "/" ? pathname === "/" : pathname.startsWith("/cadastro");
               return (
@@ -30,7 +30,7 @@ export function Frame({ children }: { children: ReactNode }) {
                   key={tab.href}
                   href={tab.href}
                   className={`rounded-full px-4 py-1.5 text-sm transition ${
-                    active ? "bg-ink text-white" : "text-soft hover:text-ink"
+                    active ? "bg-white text-accent shadow-sm" : "text-soft hover:text-ink"
                   }`}
                 >
                   {tab.label}
