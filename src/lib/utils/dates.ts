@@ -65,23 +65,39 @@ export function isWeekend(isoDate: string): boolean {
   return weekday === 0 || weekday === 6;
 }
 
-export function weekdayMondayIndex(isoDate: string): number {
-  const weekday = parseISODate(isoDate).getDay();
-  return weekday === 0 ? 6 : weekday - 1;
+export function saturdayOfWeek(date: Date): Date {
+  const weekday = date.getDay();
+  const daysFromSaturday = (weekday + 1) % 7;
+  const saturday = new Date(date);
+  saturday.setDate(date.getDate() - daysFromSaturday);
+  return saturday;
 }
 
 export function daysInMonthGrid(year: number, month: number): (string | null)[] {
   const first = startOfMonth(year, month);
   const last = endOfMonth(year, month);
-  const leading = weekdayMondayIndex(toISODate(first));
-  const cells: (string | null)[] = Array.from({ length: leading }, () => null);
+  const cells: (string | null)[] = [];
+  const cursor = saturdayOfWeek(first);
+  const lastSaturday = saturdayOfWeek(last);
 
-  for (let day = 1; day <= last.getDate(); day += 1) {
-    cells.push(toISODate(new Date(year, month, day)));
-  }
+  while (cursor <= lastSaturday) {
+    const saturday = toISODate(cursor);
+    const row = [
+      saturday,
+      addDays(saturday, 2),
+      addDays(saturday, 3),
+      addDays(saturday, 4),
+      addDays(saturday, 5),
+      addDays(saturday, 6),
+      addDays(saturday, 1),
+    ];
 
-  while (cells.length % 7 !== 0) {
-    cells.push(null);
+    for (const iso of row) {
+      const date = parseISODate(iso);
+      cells.push(date.getFullYear() === year && date.getMonth() === month ? iso : null);
+    }
+
+    cursor.setDate(cursor.getDate() + 7);
   }
 
   return cells;

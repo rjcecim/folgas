@@ -66,15 +66,15 @@ export function CalendarMonth({
         </div>
       </div>
 
-      <div className="mb-2 hidden grid-cols-7 gap-2 text-xs uppercase tracking-[0.16em] text-mute sm:grid">
+      <div className="mb-2 grid grid-cols-7 gap-1 text-[10px] uppercase tracking-[0.12em] text-mute sm:gap-2 sm:text-xs sm:tracking-[0.16em]">
         {WEEKDAY_LABELS.map((label) => (
-          <div key={label} className="px-2">
+          <div key={label} className="px-1 sm:px-2">
             {label}
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-7">
+      <div className="grid grid-cols-7 gap-1 sm:gap-2">
         {cells.map((date, index) => (
           <CalendarDay
             key={date ?? `empty-${index}`}
