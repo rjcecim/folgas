@@ -91,7 +91,12 @@ export function AppShell() {
     ]);
     return calendarYears(fromEvents.filter((year) => Number.isFinite(year)));
   }, [events]);
-  const opportunities = findFreeOpportunities(events, filters.year, today);
+  const opportunities = findFreeOpportunities(
+    events,
+    filters.year,
+    today,
+    settings?.dailyWorkHours ?? 8,
+  );
 
   async function persistEvent(input: CalendarEventInput, current?: CalendarEvent) {
     const id = current?.id ?? `evt-${crypto.randomUUID()}`;

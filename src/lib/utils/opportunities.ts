@@ -42,6 +42,7 @@ export function findFreeOpportunities(
   events: CalendarEvent[],
   year: number,
   fromDate = todayISO(),
+  dailyWorkHours = 8,
 ): FreePeriod[] {
   const start = `${year}-01-01`;
   const end = `${year}-12-31`;
@@ -95,7 +96,7 @@ export function findFreeOpportunities(
         startDate: left,
         endDate: right,
         days,
-        costHours: 8,
+        costHours: dailyWorkHours,
         kind: "bridge",
         title: `Ponte de ${days} dias com 1 folga no banco`,
       });
