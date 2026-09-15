@@ -50,3 +50,7 @@ serviceAccount.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated local agent notes
+AGENTS.md
+CLAUDE.md

@@ -44,7 +44,6 @@ src/
     validation/        schemas Zod
     utils/             datas, projeção e oportunidades
   types/               contratos de dados
-scripts/               seed inicial (somente terminal)
 ```
 
 A interface, o Firebase, as regras de negócio, a validação, os tipos e os utilitários ficam separados.
@@ -52,7 +51,7 @@ A interface, o Firebase, as regras de negócio, a validação, os tipos e os uti
 O site tem duas telas:
 
 - `/` — painel e calendário
-- `/cadastro/` — jornada, saldo, eventos, folgas e viagens
+- `/cadastro/` — jornada, saldo e cadastro de dias
 
 ## Firebase
 
@@ -119,20 +118,7 @@ saldoProjetado = saldoAtual + soma dos impactos com includeInProjection
 - Saldo projetado = 0: zerado
 - Saldo projetado < 0: negativo, com a mensagem das horas que ainda precisam ser geradas
 
-## Seed
-
-Arquivo: `scripts/seed-events.ts`
-
-- idempotente
-- não fica exposto no site
-- não depende do frontend
-- serve só para popular um conjunto inicial de dias pessoais
-
-```bash
-npm run seed
-```
-
-Novos anos devem ser cadastrados pelo próprio aplicativo, em **Novo evento**.
+Novos dias e anos entram pelo próprio aplicativo, em **Dias**.
 
 ## Execução local
 
