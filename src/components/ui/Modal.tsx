@@ -11,16 +11,16 @@ export function Modal({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-3 sm:items-center">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-3 backdrop-blur-md sm:items-center">
       <button
         type="button"
         className="absolute inset-0 cursor-default"
         aria-label="Fechar"
         onClick={onClose}
       />
-      <div className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-3xl bg-cream p-5 shadow-2xl">
-        <div className="mb-4 flex items-start justify-between gap-3">
-          <h2 className="font-serif text-2xl text-ink">{title}</h2>
+      <div className="relative max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-3xl border border-line bg-surface p-6 shadow-2xl">
+        <div className="mb-5 flex items-start justify-between gap-3">
+          <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
           <Button variant="ghost" onClick={onClose}>
             Fechar
           </Button>

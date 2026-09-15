@@ -18,46 +18,44 @@ export function EventDetails({
   onDelete: () => Promise<void>;
 }) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <div className="flex flex-wrap gap-2">
         <span className={`rounded-full px-3 py-1 text-xs font-medium ${TYPE_STYLES[event.type].chip}`}>
           {TYPE_LABELS[event.type]}
         </span>
         <span
           className={`rounded-full px-3 py-1 text-xs font-medium ${
-            event.status === "planned"
-              ? "border border-dashed border-ink/40 text-ink"
-              : "bg-ink text-cream"
+            event.status === "planned" ? "border border-dashed border-line text-mute" : "bg-sand text-ink"
           }`}
         >
           {STATUS_LABELS[event.status]}
         </span>
       </div>
-      <dl className="space-y-3 text-sm">
+      <dl className="space-y-4 text-sm">
         <div>
-          <dt className="text-xs uppercase tracking-[0.16em] text-mute">Período</dt>
-          <dd className="mt-1 text-ink">{formatDateRange(event.startDate, event.endDate)}</dd>
+          <dt className="text-xs text-mute">Período</dt>
+          <dd className="mt-1">{formatDateRange(event.startDate, event.endDate)}</dd>
         </div>
         <div>
-          <dt className="text-xs uppercase tracking-[0.16em] text-mute">Natureza</dt>
-          <dd className="mt-1 text-ink">{event.nature}</dd>
+          <dt className="text-xs text-mute">Natureza</dt>
+          <dd className="mt-1">{event.nature}</dd>
         </div>
         {event.legalBasis ? (
           <div>
-            <dt className="text-xs uppercase tracking-[0.16em] text-mute">Referência</dt>
-            <dd className="mt-1 text-ink">{event.legalBasis}</dd>
+            <dt className="text-xs text-mute">Referência</dt>
+            <dd className="mt-1">{event.legalBasis}</dd>
           </div>
         ) : null}
         {event.bankHoursImpact !== 0 ? (
           <div>
-            <dt className="text-xs uppercase tracking-[0.16em] text-mute">Impacto no banco</dt>
-            <dd className="mt-1 text-ink">{formatHours(event.bankHoursImpact)}</dd>
+            <dt className="text-xs text-mute">Impacto no banco</dt>
+            <dd className="mt-1 font-mono">{formatHours(event.bankHoursImpact)}</dd>
           </div>
         ) : null}
         {event.notes ? (
           <div>
-            <dt className="text-xs uppercase tracking-[0.16em] text-mute">Observações</dt>
-            <dd className="mt-1 whitespace-pre-wrap text-ink">{event.notes}</dd>
+            <dt className="text-xs text-mute">Observações</dt>
+            <dd className="mt-1 whitespace-pre-wrap">{event.notes}</dd>
           </div>
         ) : null}
       </dl>
@@ -67,7 +65,7 @@ export function EventDetails({
         </Button>
         {onEdit ? <Button onClick={onEdit}>Editar</Button> : null}
         <Link href={`/cadastro/?edit=${event.id}`}>
-          <Button>Editar no cadastro</Button>
+          <Button>Editar</Button>
         </Link>
       </div>
     </div>

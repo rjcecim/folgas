@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card } from "@/components/ui/Card";
-import { AppHeader } from "@/components/layout/AppHeader";
+import { AppShell } from "@/components/layout/AppShell";
 import { BankHoursForm } from "@/features/bank-hours/BankHoursForm";
 import { EventCatalog } from "@/features/events/EventCatalog";
 import { EventFilters } from "@/features/events/EventFilters";
@@ -19,25 +19,19 @@ export function CadastroPage() {
   const editing = planner.events.find((event) => event.id === selectedId);
 
   const catalog = useMemo(
-    () =>
-      [...planner.filteredEvents].sort((a, b) => a.startDate.localeCompare(b.startDate)),
+    () => [...planner.filteredEvents].sort((a, b) => a.startDate.localeCompare(b.startDate)),
     [planner.filteredEvents],
   );
 
   return (
-    <div className="min-h-screen">
-      <AppHeader />
-      <main className="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6">
+    <AppShell projection={planner.projection} dailyWorkHours={planner.dailyWorkHours}>
+      <main className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 sm:px-6 lg:py-8">
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-terra">Fora do painel</p>
-          <h1 className="mt-1 font-serif text-4xl text-ink">Cadastro</h1>
-          <p className="mt-2 max-w-2xl text-mute">
-            Aqui você informa jornada, saldo, dias sem expediente, folgas, créditos e viagens.
-            O painel só mostra o resumo e o calendário.
-          </p>
+          <p className="text-sm text-mute">Gerenciar</p>
+          <h1 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">Dias e saldo</h1>
         </div>
 
-        {planner.error ? <p className="text-sm text-rose-700">{planner.error}</p> : null}
+        {planner.error ? <p className="text-sm text-red-400">{planner.error}</p> : null}
 
         <Card title="Banco de horas">
           {planner.settings ? (
@@ -47,12 +41,12 @@ export function CadastroPage() {
               onSave={planner.persistBankHours}
             />
           ) : (
-            <p className="text-sm text-mute">Carregando saldo...</p>
+            <p className="text-sm text-mute">Carregando...</p>
           )}
         </Card>
 
-        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-          <Card title={editing ? "Editar evento" : "Novo evento"}>
+        <div className="grid gap-5 xl:grid-cols-2">
+          <Card title={editing ? "Editar dia" : "Novo dia"}>
             <EventForm
               key={editing?.id ?? "new"}
               event={editing}
@@ -65,7 +59,7 @@ export function CadastroPage() {
             />
           </Card>
 
-          <Card title="Dias cadastrados">
+          <Card title="Lista">
             <div className="mb-4">
               <EventFilters
                 value={planner.filters}
@@ -81,6 +75,6 @@ export function CadastroPage() {
           </Card>
         </div>
       </main>
-    </div>
+    </AppShell>
   );
 }

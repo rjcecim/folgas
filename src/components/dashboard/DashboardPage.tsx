@@ -3,12 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { CalendarEvent } from "@/types";
-import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Legend } from "@/components/dashboard/Legend";
 import { UpcomingList } from "@/components/dashboard/UpcomingList";
 import { DashboardStats } from "@/components/dashboard/DashboardStats";
-import { AppHeader } from "@/components/layout/AppHeader";
+import { AppShell } from "@/components/layout/AppShell";
 import { CalendarMonth } from "@/features/calendar/CalendarMonth";
 import { EventDialog } from "@/features/events/EventDialog";
 import { EventFilters } from "@/features/events/EventFilters";
@@ -21,43 +20,27 @@ export function DashboardPage() {
   const [selected, setSelected] = useState<CalendarEvent | null>(null);
 
   return (
-    <div className="min-h-screen">
-      <AppHeader />
-      <main className="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6">
-        {planner.error ? <p className="text-sm text-rose-700">{planner.error}</p> : null}
+    <AppShell projection={planner.projection} dailyWorkHours={planner.dailyWorkHours}>
+      <main className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 sm:px-6 lg:py-8">
+        {planner.error ? <p className="text-sm text-red-400">{planner.error}</p> : null}
+
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-sm text-mute">Sua agenda</p>
+            <h1 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">O mês à frente</h1>
+          </div>
+          <Link href="/cadastro/">
+            <Button>Novo dia</Button>
+          </Link>
+        </div>
 
         <DashboardStats
           projection={planner.projection}
           dailyWorkHours={planner.dailyWorkHours}
         />
 
-        <div className="grid gap-4 lg:grid-cols-3">
-          <UpcomingList
-            title="Sem expediente"
-            events={planner.upcomingOffDays}
-            empty="Nenhum dia à frente."
-            onSelect={setSelected}
-          />
-          <UpcomingList
-            title="Folgas no banco"
-            events={planner.upcomingLeaves}
-            empty="Nenhuma folga planejada."
-            onSelect={setSelected}
-          />
-          <UpcomingTrips trips={planner.upcomingTrips} onSelect={setSelected} />
-        </div>
-
-        <OpportunitiesCard periods={planner.opportunities} />
-
-        <Card
-          title="Calendário"
-          action={
-            <Link href="/cadastro/">
-              <Button variant="secondary">Cadastrar dias</Button>
-            </Link>
-          }
-        >
-          <div className="mb-5 space-y-4">
+        <section className="rounded-3xl border border-line/80 bg-surface/80 p-4 sm:p-6">
+          <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <EventFilters
               value={planner.filters}
               years={planner.years}
@@ -66,7 +49,6 @@ export function DashboardPage() {
                 if (next.year !== planner.filters.year) planner.setMonth(0);
               }}
             />
-            <Legend />
           </div>
           <CalendarMonth
             year={planner.filters.year}
@@ -77,22 +59,40 @@ export function DashboardPage() {
             onSelectEvent={setSelected}
             years={planner.years}
           />
-        </Card>
+          <div className="mt-5">
+            <Legend />
+          </div>
+        </section>
+
+        <OpportunitiesCard periods={planner.opportunities} />
+
+        <div className="grid gap-3 lg:grid-cols-3">
+          <UpcomingList
+            title="Próximos dias"
+            events={planner.upcomingOffDays}
+            empty="Nada à frente."
+            onSelect={setSelected}
+          />
+          <UpcomingList
+            title="Folgas"
+            events={planner.upcomingLeaves}
+            empty="Nenhuma folga."
+            onSelect={setSelected}
+          />
+          <UpcomingTrips trips={planner.upcomingTrips} onSelect={setSelected} />
+        </div>
       </main>
 
       {selected ? (
         <EventDialog
-          mode="details"
           event={selected}
-          dailyWorkHours={planner.dailyWorkHours}
           onClose={() => setSelected(null)}
-          onSave={planner.persistEvent}
           onDelete={async (event) => {
             await planner.deleteEvent(event);
             setSelected(null);
           }}
         />
       ) : null}
-    </div>
+    </AppShell>
   );
 }

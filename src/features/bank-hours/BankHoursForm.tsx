@@ -60,7 +60,7 @@ export function BankHoursForm({
         {saving ? "Salvando..." : "Atualizar saldo"}
       </Button>
       {error && !error.includes("saldo") ? (
-        <p className="text-sm text-rose-700 sm:col-span-3">{error}</p>
+        <p className="text-sm text-red-400 sm:col-span-3">{error}</p>
       ) : null}
     </form>
   );

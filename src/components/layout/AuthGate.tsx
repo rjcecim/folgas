@@ -11,7 +11,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   if (status === "loading") {
     return (
       <main className="grid min-h-screen place-items-center px-6">
-        <p className="text-mute">Carregando...</p>
+        <p className="text-sm text-mute">Abrindo sua agenda...</p>
       </main>
     );
   }

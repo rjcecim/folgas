@@ -1,29 +1,34 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-cream: #f6f1e8;
-  --color-sand: #ebe3d6;
-  --color-ink: #1b1714;
-  --color-mute: #6f655c;
-  --color-line: #ddd4c7;
-  --color-terra: #c45c2a;
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
+  --color-cream: #070708;
+  --color-sand: #161618;
+  --color-ink: #f4f4f5;
+  --color-mute: #9f9fa8;
+  --color-line: #2a2a2e;
+  --color-terra: #d6ff3f;
+  --color-surface: #101012;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  color-scheme: dark;
 }
 
 html,
 body {
   min-height: 100%;
-  background:
-    radial-gradient(1200px 500px at 10% -10%, #fff8ee 0%, transparent 50%),
-    radial-gradient(800px 400px at 100% 0%, #efe4d4 0%, transparent 40%),
-    var(--color-cream);
+  background: #070708;
 }
 
 body {
-  font-family: var(--font-sans), "Segoe UI", sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-.font-serif {
-  font-family: var(--font-serif), Georgia, serif;
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  color-scheme: dark;
 }

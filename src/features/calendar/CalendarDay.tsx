@@ -2,7 +2,7 @@
 
 import type { CalendarEvent } from "@/types";
 import { isWeekend, todayISO } from "@/lib/utils/dates";
-import { TYPE_STYLES, eventTone } from "./eventStyles";
+import { TYPE_STYLES } from "./eventStyles";
 
 export function CalendarDay({
   date,
@@ -14,7 +14,7 @@ export function CalendarDay({
   onSelect: (event: CalendarEvent) => void;
 }) {
   if (!date) {
-    return <div className="min-h-24 rounded-2xl bg-transparent" />;
+    return <div className="min-h-[6.5rem] rounded-2xl bg-sand/30" />;
   }
 
   const dayNumber = Number(date.slice(-2));
@@ -23,12 +23,20 @@ export function CalendarDay({
 
   return (
     <div
-      className={`min-h-24 rounded-2xl border p-2 ${
-        weekend ? "border-terra/20 bg-terra/5" : "border-line bg-white/80"
-      } ${isToday ? "ring-2 ring-terra" : ""}`}
+      className={`min-h-[6.5rem] rounded-2xl border p-2 transition ${
+        isToday
+          ? "border-terra/50 bg-terra/8"
+          : weekend
+            ? "border-transparent bg-sand/40"
+            : "border-transparent bg-sand/70 hover:border-line"
+      }`}
     >
-      <div className="mb-1 flex items-center justify-between">
-        <span className={`text-sm ${isToday ? "font-semibold text-terra" : "text-ink"}`}>
+      <div className="mb-2">
+        <span
+          className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-sm ${
+            isToday ? "bg-terra font-semibold text-black" : "text-ink/90"
+          }`}
+        >
           {dayNumber}
         </span>
       </div>
@@ -38,13 +46,14 @@ export function CalendarDay({
             key={event.id}
             type="button"
             onClick={() => onSelect(event)}
-            className={`block w-full truncate rounded-lg border px-1.5 py-1 text-left text-[11px] leading-4 ${TYPE_STYLES[event.type].chip} ${eventTone(event)}`}
+            className="flex w-full items-center gap-1.5 rounded-lg px-1 py-0.5 text-left hover:bg-white/5"
           >
-            {event.title}
+            <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${TYPE_STYLES[event.type].dot}`} />
+            <span className="truncate text-[11px] leading-4 text-ink/90">{event.title}</span>
           </button>
         ))}
         {events.length > 3 ? (
-          <p className="text-[10px] text-mute">+{events.length - 3} mais</p>
+          <p className="px-1 text-[10px] text-mute">+{events.length - 3}</p>
         ) : null}
       </div>
     </div>

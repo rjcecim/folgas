@@ -20,11 +20,14 @@ export function EventCatalog({
   }
 
   return (
-    <ul className="divide-y divide-line">
+    <ul className="space-y-2">
       {events.map((event) => (
-        <li key={event.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
+        <li
+          key={event.id}
+          className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-sand/70 px-3 py-3"
+        >
           <div>
-            <p className="font-medium text-ink">{event.title}</p>
+            <p className="font-medium">{event.title}</p>
             <p className="text-sm text-mute">{formatDateRange(event.startDate, event.endDate)}</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">

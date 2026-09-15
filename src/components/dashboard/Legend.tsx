@@ -16,22 +16,13 @@ const types: EventType[] = [
 
 export function Legend() {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-x-3 gap-y-2">
       {types.map((type) => (
-        <span
-          key={type}
-          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs ${TYPE_STYLES[type].chip}`}
-        >
-          <span className={`h-2 w-2 rounded-full ${TYPE_STYLES[type].dot}`} />
+        <span key={type} className="inline-flex items-center gap-1.5 text-xs text-mute">
+          <span className={`h-1.5 w-1.5 rounded-full ${TYPE_STYLES[type].dot}`} />
           {TYPE_LABELS[type]}
         </span>
       ))}
-      <span className="inline-flex items-center rounded-full bg-ink px-3 py-1 text-xs text-cream">
-        Confirmado
-      </span>
-      <span className="inline-flex items-center rounded-full border border-dashed border-ink/40 px-3 py-1 text-xs text-ink">
-        Planejado
-      </span>
     </div>
   );
 }

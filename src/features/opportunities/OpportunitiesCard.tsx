@@ -7,26 +7,24 @@ import { formatHours } from "@/lib/utils/projection";
 
 export function OpportunitiesCard({ periods }: { periods: FreePeriod[] }) {
   return (
-    <Card title="Oportunidades de folga">
+    <Card title="Pontes">
       {periods.length === 0 ? (
-        <p className="text-sm text-mute">
-          Ainda não há períodos consecutivos livres à frente neste ano.
-        </p>
+        <p className="text-sm text-mute">Nenhuma ponte à frente neste ano.</p>
       ) : (
-        <ul className="space-y-2">
+        <div className="flex gap-3 overflow-x-auto pb-1">
           {periods.map((period) => (
-            <li
+            <div
               key={`${period.kind}-${period.startDate}-${period.endDate}`}
-              className="rounded-2xl bg-sand px-3 py-3"
+              className="min-w-52 shrink-0 rounded-2xl bg-sand px-4 py-3"
             >
-              <p className="font-medium text-ink">{period.title}</p>
-              <p className="text-sm text-mute">
-                {formatDateRange(period.startDate, period.endDate)} · custo{" "}
+              <p className="text-sm font-medium">{period.title}</p>
+              <p className="mt-1 text-xs text-mute">
+                {formatDateRange(period.startDate, period.endDate)} ·{" "}
                 {formatHours(-Math.abs(period.costHours))}
               </p>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </Card>
   );

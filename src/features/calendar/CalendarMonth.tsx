@@ -34,26 +34,20 @@ export function CalendarMonth({
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-mute">Calendário</p>
-          <h2 className="font-serif text-3xl text-ink">
-            {MONTH_LABELS[month]} {year}
-          </h2>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {MONTH_LABELS[month]}
+          <span className="ml-2 text-mute">{year}</span>
+        </h2>
+        <div className="flex items-center gap-2">
           <Button variant="secondary" onClick={() => goMonth(-1)}>
-            Anterior
+            ‹
           </Button>
           <Button variant="secondary" onClick={() => goMonth(1)}>
-            Próximo
+            ›
           </Button>
-          <label className="sr-only" htmlFor="year-select">
-            Ano
-          </label>
           <select
-            id="year-select"
-            className="rounded-full border border-line bg-white px-3 py-2 text-sm"
+            className="h-9 rounded-full border border-line bg-sand px-3 text-sm"
             value={year}
             onChange={(event) => onYearChange(Number(event.target.value))}
           >
@@ -66,15 +60,15 @@ export function CalendarMonth({
         </div>
       </div>
 
-      <div className="mb-2 grid grid-cols-7 gap-1 text-[10px] uppercase tracking-[0.12em] text-mute sm:gap-2 sm:text-xs sm:tracking-[0.16em]">
+      <div className="mb-2 grid grid-cols-7 text-[11px] font-medium text-mute">
         {WEEKDAY_LABELS.map((label) => (
-          <div key={label} className="px-1 sm:px-2">
+          <div key={label} className="px-2 py-1">
             {label}
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1 sm:gap-2">
+      <div className="grid grid-cols-7 gap-1.5">
         {cells.map((date, index) => (
           <CalendarDay
             key={date ?? `empty-${index}`}
