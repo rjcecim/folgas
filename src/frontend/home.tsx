@@ -63,7 +63,7 @@ export function HomeScreen() {
           </Link>
         </div>
 
-        <div className="mb-6 max-w-3xl">
+        <div className="mb-6 max-w-3xl rounded-[28px] bg-white p-4 ring-1 ring-hair">
           <Filters
             value={planner.filters}
             years={planner.years}
@@ -84,8 +84,8 @@ export function HomeScreen() {
           onSelect={setSelected}
         />
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-2">
-          <section>
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          <section className="rounded-[28px] bg-white p-5 ring-1 ring-hair">
             <h2 className="text-sm text-soft">Em seguida</h2>
             {upcoming.length === 0 ? (
               <p className="mt-3 text-sm text-soft">Nada à frente.</p>
@@ -96,7 +96,7 @@ export function HomeScreen() {
                     <button
                       type="button"
                       onClick={() => setSelected(event)}
-                      className="flex w-full items-center gap-3 rounded-2xl px-1 py-2 text-left hover:bg-well"
+                      className="flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left ring-1 ring-hair hover:bg-well"
                     >
                       <span
                         className="h-2.5 w-2.5 shrink-0 rounded-full"
@@ -115,7 +115,7 @@ export function HomeScreen() {
             )}
           </section>
 
-          <section>
+          <section className="rounded-[28px] bg-white p-5 ring-1 ring-hair">
             <h2 className="text-sm text-soft">Pontes</h2>
             {planner.opportunities.length === 0 ? (
               <p className="mt-3 text-sm text-soft">Nenhuma ponte à frente neste ano.</p>
@@ -124,7 +124,7 @@ export function HomeScreen() {
                 {planner.opportunities.map((period) => (
                   <li
                     key={`${period.kind}-${period.startDate}-${period.endDate}`}
-                    className="rounded-2xl bg-well px-4 py-3"
+                    className="rounded-2xl bg-well px-4 py-3 ring-1 ring-hair"
                   >
                     <p className="font-medium">{period.title}</p>
                     <p className="mt-1 text-sm text-soft">

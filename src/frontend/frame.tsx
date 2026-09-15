@@ -22,7 +22,7 @@ export function Frame({ children }: { children: ReactNode }) {
           <Link href="/" className="text-lg font-semibold tracking-tight">
             Folgas
           </Link>
-          <nav className="flex rounded-full bg-well p-1">
+          <nav className="flex rounded-full bg-well p-1 ring-1 ring-hair">
             {tabs.map((tab) => {
               const active = tab.href === "/" ? pathname === "/" : pathname.startsWith("/cadastro");
               return (

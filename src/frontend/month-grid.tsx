@@ -61,15 +61,15 @@ export function MonthGrid({
         </div>
       </div>
 
-      <div className="grid grid-cols-7 rounded-[28px] bg-well/60 p-3 sm:p-4">
+      <div className="grid grid-cols-7 gap-1.5 rounded-[28px] bg-well p-3 ring-1 ring-hair sm:gap-2 sm:p-4">
         {WEEKDAY_LABELS.map((label) => (
-          <div key={label} className="px-2 pb-3 text-sm text-soft">
+          <div key={label} className="px-2 pb-2 text-sm text-soft">
             {label}
           </div>
         ))}
         {cells.map((date, index) => {
           if (!date) {
-            return <div key={`empty-${index}`} className="min-h-28" />;
+            return <div key={`empty-${index}`} className="min-h-28 rounded-2xl ring-1 ring-hair/50" />;
           }
 
           const dayEvents = events.filter((event) =>
@@ -81,7 +81,9 @@ export function MonthGrid({
           return (
             <div
               key={date}
-              className={`min-h-28 rounded-2xl bg-white px-2 py-2 ${muted ? "text-soft" : ""}`}
+              className={`min-h-28 rounded-2xl bg-white px-2 py-2 ring-1 ${
+                isToday ? "ring-accent" : "ring-hair"
+              } ${muted ? "text-soft" : ""}`}
             >
               <span
                 className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-sm ${

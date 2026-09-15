@@ -49,7 +49,7 @@ export function Field({
 }
 
 const box =
-  "w-full rounded-2xl border-0 bg-well px-3 py-2.5 text-sm text-ink outline-none ring-1 ring-transparent transition placeholder:text-soft/70 focus:bg-white focus:ring-accent";
+  "w-full rounded-2xl border-0 bg-white px-3 py-2.5 text-sm text-ink outline-none ring-1 ring-hair transition placeholder:text-soft/70 focus:ring-accent";
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={box} {...props} />;
@@ -75,7 +75,7 @@ export function Sheet({
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/20 p-3 sm:items-center">
       <button type="button" className="absolute inset-0" aria-label="Fechar" onClick={onClose} />
-      <div className="relative max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-[28px] bg-panel p-6 shadow-2xl">
+      <div className="relative max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-[28px] bg-panel p-6 shadow-2xl ring-1 ring-hair">
         <div className="mb-5 flex items-start justify-between gap-3">
           <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
           <Btn tone="ghost" onClick={onClose}>

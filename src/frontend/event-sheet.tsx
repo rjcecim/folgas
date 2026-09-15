@@ -22,7 +22,7 @@ export function EventSheet({
       <div className="space-y-5">
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className="inline-flex items-center gap-2 rounded-full bg-well px-3 py-1 text-sm"
+            className="inline-flex items-center gap-2 rounded-full bg-well px-3 py-1 text-sm ring-1 ring-hair"
           >
             <span
               className="h-2 w-2 rounded-full"
