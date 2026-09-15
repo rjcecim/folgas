@@ -1,7 +1,7 @@
 "use client";
 
 import type { CalendarEvent } from "@/types";
-import { todayISO } from "@/lib/utils/dates";
+import { isWeekend, todayISO } from "@/lib/utils/dates";
 import { TYPE_STYLES, eventTone } from "./eventStyles";
 
 export function CalendarDay({
@@ -19,12 +19,13 @@ export function CalendarDay({
 
   const dayNumber = Number(date.slice(-2));
   const isToday = date === todayISO();
+  const weekend = isWeekend(date);
 
   return (
     <div
-      className={`min-h-24 rounded-2xl border border-line bg-white/80 p-2 ${
-        isToday ? "ring-2 ring-terra" : ""
-      }`}
+      className={`min-h-24 rounded-2xl border p-2 ${
+        weekend ? "border-terra/20 bg-terra/5" : "border-line bg-white/80"
+      } ${isToday ? "ring-2 ring-terra" : ""}`}
     >
       <div className="mb-1 flex items-center justify-between">
         <span className={`text-sm ${isToday ? "font-semibold text-terra" : "text-ink"}`}>

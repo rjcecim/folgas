@@ -53,6 +53,11 @@ scripts/               seed inicial (somente terminal)
 
 A interface, o Firebase, as regras de negócio, a validação, os tipos e os utilitários ficam separados.
 
+O site tem duas telas:
+
+- `/` — painel e calendário
+- `/cadastro/` — jornada, saldo, eventos, folgas e viagens
+
 ## Firebase
 
 Projeto: `folgas-rjcecim`

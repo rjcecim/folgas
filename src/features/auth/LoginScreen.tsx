@@ -7,19 +7,29 @@ export function LoginScreen() {
   const { signIn, error } = useAuth();
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-lg flex-col justify-center px-6 py-12">
-      <p className="text-xs uppercase tracking-[0.28em] text-terra">Agenda pessoal</p>
-      <h1 className="mt-3 font-serif text-5xl leading-tight text-ink">Folgas</h1>
-      <p className="mt-4 text-lg leading-8 text-mute">
-        Planeje dias sem expediente, banco de horas e viagens. Os dias cadastrados
-        são seus: edite, exclua ou inclua os do ano que vem quando quiser.
-      </p>
-      <div className="mt-8">
-        <Button onClick={signIn} className="w-full sm:w-auto">
-          Entrar com Google
-        </Button>
-      </div>
-      {error ? <p className="mt-4 text-sm text-rose-700">{error}</p> : null}
+    <main className="grid min-h-screen lg:grid-cols-[1.1fr_0.9fr]">
+      <section className="flex flex-col justify-between bg-ink px-8 py-10 text-cream sm:px-14">
+        <p className="text-xs uppercase tracking-[0.32em] text-terra">Agenda pessoal</p>
+        <div>
+          <h1 className="font-serif text-6xl leading-[0.95]">Folgas</h1>
+          <p className="mt-6 max-w-md text-lg leading-8 text-cream/70">
+            Um painel para ver o mês. Uma tela só para cadastrar o que importa.
+          </p>
+        </div>
+        <p className="text-sm text-cream/45">Banco de horas, viagens e dias sem expediente.</p>
+      </section>
+      <section className="flex items-center px-8 py-16 sm:px-14">
+        <div className="w-full max-w-sm">
+          <h2 className="font-serif text-3xl text-ink">Entrar</h2>
+          <p className="mt-3 text-mute">Use a conta Google autorizada para abrir seu calendário.</p>
+          <div className="mt-8">
+            <Button onClick={signIn} className="w-full">
+              Continuar com Google
+            </Button>
+          </div>
+          {error ? <p className="mt-4 text-sm text-rose-700">{error}</p> : null}
+        </div>
+      </section>
     </main>
   );
 }

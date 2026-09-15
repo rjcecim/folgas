@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { CalendarEvent } from "@/types";
 import { Button } from "@/components/ui/Button";
 import { STATUS_LABELS, TYPE_LABELS } from "@/lib/constants";
@@ -13,7 +14,7 @@ export function EventDetails({
   onDelete,
 }: {
   event: CalendarEvent;
-  onEdit: () => void;
+  onEdit?: () => void;
   onDelete: () => Promise<void>;
 }) {
   return (
@@ -43,7 +44,7 @@ export function EventDetails({
         </div>
         {event.legalBasis ? (
           <div>
-            <dt className="text-xs uppercase tracking-[0.16em] text-mute">Fundamento</dt>
+            <dt className="text-xs uppercase tracking-[0.16em] text-mute">Referência</dt>
             <dd className="mt-1 text-ink">{event.legalBasis}</dd>
           </div>
         ) : null}
@@ -64,7 +65,10 @@ export function EventDetails({
         <Button variant="danger" onClick={onDelete}>
           Excluir
         </Button>
-        <Button onClick={onEdit}>Editar</Button>
+        {onEdit ? <Button onClick={onEdit}>Editar</Button> : null}
+        <Link href={`/cadastro/?edit=${event.id}`}>
+          <Button>Editar no cadastro</Button>
+        </Link>
       </div>
     </div>
   );

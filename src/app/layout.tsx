@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Source_Sans_3 } from "next/font/google";
+import { Providers } from "@/components/layout/Providers";
 import "./globals.css";
 
 const serif = Fraunces({
@@ -21,7 +22,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" className={`${serif.variable} ${sans.variable} h-full`}>
-      <body className="min-h-full bg-cream font-sans text-ink antialiased">{children}</body>
+      <body className="min-h-full bg-cream font-sans text-ink antialiased">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

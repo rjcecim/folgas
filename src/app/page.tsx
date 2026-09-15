@@ -1,5 +1,10 @@
-import { AppRoot } from "@/components/layout/AppRoot";
+import { AuthGate } from "@/components/layout/AuthGate";
+import { DashboardPage } from "@/components/dashboard/DashboardPage";
 
 export default function Home() {
-  return <AppRoot />;
+  return (
+    <AuthGate>
+      <DashboardPage />
+    </AuthGate>
+  );
 }

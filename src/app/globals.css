@@ -1,19 +1,23 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-cream: #f4efe6;
-  --color-sand: #ebe2d4;
-  --color-ink: #241c15;
-  --color-mute: #6d6258;
-  --color-line: #d8cfc2;
-  --color-terra: #9a4a2a;
+  --color-cream: #f6f1e8;
+  --color-sand: #ebe3d6;
+  --color-ink: #1b1714;
+  --color-mute: #6f655c;
+  --color-line: #ddd4c7;
+  --color-terra: #c45c2a;
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
 }
 
 html,
 body {
-  background: var(--color-cream);
+  min-height: 100%;
+  background:
+    radial-gradient(1200px 500px at 10% -10%, #fff8ee 0%, transparent 50%),
+    radial-gradient(800px 400px at 100% 0%, #efe4d4 0%, transparent 40%),
+    var(--color-cream);
 }
 
 body {
