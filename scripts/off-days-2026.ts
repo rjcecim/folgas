@@ -29,29 +29,6 @@ function day(
   };
 }
 
-export const LEGACY_EVENT_IDS = [
-  "old-2026-02-16",
-  "old-2026-02-17",
-  "old-2026-02-18",
-  "old-2026-04-02",
-  "old-2026-04-03",
-  "old-2026-04-20",
-  "old-2026-04-21",
-  "old-2026-05-01",
-  "old-2026-06-04",
-  "old-2026-06-05",
-  "old-2026-09-07",
-  "old-2026-10-12",
-  "old-2026-10-26",
-  "old-2026-10-27",
-  "old-2026-10-28",
-  "old-2026-11-02",
-  "old-2026-11-20",
-  "old-2026-12-07",
-  "old-2026-12-08",
-  "old-2026-12-20",
-];
-
 export const OFF_DAYS_2026: OffDaySeed[] = [
   day("livre-2026-02-16", "Carnaval", "2026-02-16", "optional_day", "Ponto facultativo"),
   day("livre-2026-02-17", "Carnaval", "2026-02-17", "optional_day", "Ponto facultativo"),

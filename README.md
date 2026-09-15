@@ -34,15 +34,11 @@ Não há Docker, PostgreSQL, Prisma, Auth.js, Server Actions, API Routes, Fireba
 
 ```
 src/
-  app/                 interface Next.js (exportação estática)
-  components/          layout, dashboard e primitives de UI
+  app/                 rotas Next.js (exportação estática)
+  frontend/            telas, calendário e primitives
   features/
     auth/              login Google e bloqueio de conta
-    calendar/          calendário mensal
-    events/            criar, editar, excluir e filtrar
-    bank-hours/        saldo e projeção
-    trips/             próximas viagens
-    opportunities/     períodos consecutivos livres
+    planner/           dados, filtros e persistência
   lib/
     firebase/          cliente, coleções e persistência
     validation/        schemas Zod
