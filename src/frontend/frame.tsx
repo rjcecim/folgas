@@ -8,8 +8,15 @@ import { Btn } from "./ui";
 
 const tabs = [
   { href: "/", label: "Agenda" },
-  { href: "/cadastro/", label: "Dias" },
+  { href: "/banco/", label: "Banco" },
+  { href: "/folgas/", label: "Folgas" },
 ];
+
+function tabIsActive(href: string, pathname: string) {
+  if (href === "/") return pathname === "/";
+  if (href === "/folgas/") return pathname.startsWith("/folgas") || pathname.startsWith("/cadastro");
+  return pathname.startsWith(href.replace(/\/$/, ""));
+}
 
 export function Frame({ children }: { children: ReactNode }) {
   const { user, signOut } = useAuth();
@@ -24,7 +31,7 @@ export function Frame({ children }: { children: ReactNode }) {
           </Link>
           <nav className="flex rounded-full bg-well p-1 ring-1 ring-hair">
             {tabs.map((tab) => {
-              const active = tab.href === "/" ? pathname === "/" : pathname.startsWith("/cadastro");
+              const active = tabIsActive(tab.href, pathname);
               return (
                 <Link
                   key={tab.href}

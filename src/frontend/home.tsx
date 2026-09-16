@@ -35,8 +35,10 @@ export function HomeScreen() {
         <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm">
             <p>
-              <span className="text-soft">Registrado </span>
-              <strong>{formatDuration(planner.projection.registeredMinutes)}</strong>
+              <Link href="/banco/" className="text-soft hover:text-ink">
+                Registrado{" "}
+                <strong className="text-ink">{formatDuration(planner.projection.registeredMinutes)}</strong>
+              </Link>
             </p>
             <p>
               <span className="text-soft">Confirmado hoje </span>
@@ -64,7 +66,7 @@ export function HomeScreen() {
                 : ""}
             </p>
           </div>
-          <Link href="/cadastro/">
+          <Link href="/folgas/">
             <Btn>Novo dia</Btn>
           </Link>
         </div>

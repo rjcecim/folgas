@@ -49,7 +49,7 @@ export function EventSheet({
           >
             Excluir
           </Btn>
-          <Link href={`/cadastro/?edit=${event.id}`}>
+          <Link href={`/folgas/?edit=${event.id}`}>
             <Btn>Editar</Btn>
           </Link>
         </div>
