@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { usePlanner } from "@/features/planner/usePlanner";
 import { BankForm } from "./bank-form";
+import { BankLedger } from "./bank-ledger";
 import { DayForm } from "./day-form";
 import { DayList } from "./day-list";
 import { Filters } from "./filters";
@@ -34,11 +35,21 @@ export function ManageScreen() {
         <section className="rounded-[28px] bg-white p-5 ring-1 ring-hair sm:p-6">
           <h2 className="mb-4 text-sm text-soft">Banco de horas</h2>
           {planner.settings ? (
-            <BankForm
-              key={`${planner.settings.currentBalanceHours}-${planner.settings.dailyWorkHours}`}
-              settings={planner.settings}
-              onSave={planner.persistBankHours}
-            />
+            <div className="space-y-6">
+              <BankForm
+                key={planner.settings.dailyWorkHours}
+                dailyWorkHours={planner.dailyWorkHours}
+                onSave={planner.persistDailyWorkHours}
+              />
+              <BankLedger
+                today={planner.today}
+                parcels={planner.parcels}
+                adjustments={planner.adjustments}
+                summary={planner.summary}
+                onSaveParcel={planner.persistParcel}
+                onDistributeLegacy={planner.distributeLegacy}
+              />
+            </div>
           ) : (
             <p className="text-sm text-soft">Carregando...</p>
           )}
@@ -51,6 +62,8 @@ export function ManageScreen() {
               key={editing?.id ?? "new"}
               event={editing}
               dailyWorkHours={planner.dailyWorkHours}
+              parcels={planner.parcels}
+              preview={planner.previewLeaveAllocation}
               onCancel={() => setSelectedId(undefined)}
               onSubmit={async (input) => {
                 await planner.persistEvent(input, editing);

@@ -25,6 +25,7 @@ export interface CalendarEvent {
   official: boolean;
   status: EventStatus;
   bankHoursImpact: number;
+  bankMinutesImpact: number;
   includeInProjection: boolean;
   legalBasis: string;
   notes: string;

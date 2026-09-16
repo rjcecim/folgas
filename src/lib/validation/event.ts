@@ -10,7 +10,8 @@ export const eventFormSchema = z
     nature: z.string().trim().min(1, "Informe a natureza."),
     official: z.boolean(),
     status: z.enum(EVENT_STATUSES),
-    hours: z.number().min(0, "As horas não podem ser negativas."),
+    hours: z.number().int().min(0, "As horas não podem ser negativas."),
+    minutes: z.number().int().min(0).max(59, "Minutos devem ficar entre 0 e 59."),
     includeInProjection: z.boolean(),
     legalBasis: z.string(),
     notes: z.string(),
@@ -23,9 +24,9 @@ export const eventFormSchema = z
     (value) =>
       value.type !== "bank_hours_leave" && value.type !== "future_bank_credit"
         ? true
-        : value.hours > 0,
+        : value.hours * 60 + value.minutes > 0,
     {
-      message: "Informe as horas do banco.",
+      message: "Informe a duração do banco.",
       path: ["hours"],
     },
   );

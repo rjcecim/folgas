@@ -24,6 +24,9 @@ function mapEvent(id: string, data: Record<string, unknown>): CalendarEvent {
     official: Boolean(data.official),
     status: data.status as CalendarEvent["status"],
     bankHoursImpact: Number(data.bankHoursImpact ?? 0),
+    bankMinutesImpact: Number(
+      data.bankMinutesImpact ?? Math.round(Number(data.bankHoursImpact ?? 0) * 60),
+    ),
     includeInProjection: Boolean(data.includeInProjection),
     legalBasis: String(data.legalBasis ?? ""),
     notes: String(data.notes ?? ""),

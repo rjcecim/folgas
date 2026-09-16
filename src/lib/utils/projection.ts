@@ -1,42 +1,40 @@
-import type { BankHoursSettings, CalendarEvent } from "@/types";
+import type { CalendarEvent } from "@/types";
+import type { BankSummary } from "@/types/bank";
+import { eventBankMinutes } from "./duration";
 
-export interface BankHoursProjection {
-  currentBalanceHours: number;
-  plannedLeaveHours: number;
-  futureCreditHours: number;
-  projectedBalanceHours: number;
-  hoursStillNeeded: number;
+export interface BankHoursProjection extends BankSummary {
+  futureCreditMinutes: number;
+  projectedMinutes: number;
+  minutesStillNeeded: number;
   tone: "positive" | "zero" | "negative";
 }
 
 export function projectBankHours(
-  settings: BankHoursSettings,
+  summary: BankSummary,
   events: CalendarEvent[],
 ): BankHoursProjection {
-  const relevant = events.filter((event) => event.includeInProjection);
-  const plannedLeaveHours = relevant
-    .filter((event) => event.bankHoursImpact < 0)
-    .reduce((sum, event) => sum + event.bankHoursImpact, 0);
-  const futureCreditHours = relevant
-    .filter((event) => event.bankHoursImpact > 0)
-    .reduce((sum, event) => sum + event.bankHoursImpact, 0);
-  const projectedBalanceHours =
-    settings.currentBalanceHours + plannedLeaveHours + futureCreditHours;
-  const hoursStillNeeded =
-    projectedBalanceHours < 0 ? Math.abs(projectedBalanceHours) : 0;
+  const futureCreditMinutes = events
+    .filter((event) => event.includeInProjection && event.type === "future_bank_credit")
+    .reduce((sum, event) => sum + Math.abs(eventBankMinutes(event)), 0);
+  const projectedMinutes = summary.confirmedMinutes + futureCreditMinutes;
+  const uncoveredLeave = events
+    .filter(
+      (event) =>
+        event.includeInProjection &&
+        event.type === "bank_hours_leave" &&
+        (event.status === "planned" || event.status === "confirmed"),
+    )
+    .reduce((sum, event) => sum + Math.abs(eventBankMinutes(event)), 0);
+  const reservedOrConsumed = summary.reservedMinutes;
+  const minutesStillNeeded = Math.max(0, uncoveredLeave - reservedOrConsumed);
 
   return {
-    currentBalanceHours: settings.currentBalanceHours,
-    plannedLeaveHours,
-    futureCreditHours,
-    projectedBalanceHours,
-    hoursStillNeeded,
+    ...summary,
+    futureCreditMinutes,
+    projectedMinutes,
+    minutesStillNeeded,
     tone:
-      projectedBalanceHours > 0
-        ? "positive"
-        : projectedBalanceHours === 0
-          ? "zero"
-          : "negative",
+      projectedMinutes > 0 ? "positive" : projectedMinutes === 0 ? "zero" : "negative",
   };
 }
 

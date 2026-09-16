@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { CalendarEvent } from "@/types";
 import { STATUS_LABELS, TYPE_LABELS } from "@/lib/constants";
 import { formatDateRange } from "@/lib/utils/dates";
-import { formatHours } from "@/lib/utils/projection";
+import { eventBankMinutes, formatDuration } from "@/lib/utils/duration";
 import { TYPE_COLOR } from "./colors";
 import { Btn, Sheet } from "./ui";
 
@@ -35,8 +35,8 @@ export function EventSheet({
         <p className="text-lg">{formatDateRange(event.startDate, event.endDate)}</p>
         <p className="text-soft">{event.nature}</p>
         {event.legalBasis ? <p className="text-sm text-soft">{event.legalBasis}</p> : null}
-        {event.bankHoursImpact !== 0 ? (
-          <p className="text-sm">Banco: {formatHours(event.bankHoursImpact)}</p>
+        {eventBankMinutes(event) !== 0 ? (
+          <p className="text-sm">Banco: {formatDuration(eventBankMinutes(event))}</p>
         ) : null}
         {event.notes ? <p className="whitespace-pre-wrap text-sm">{event.notes}</p> : null}
         <div className="flex flex-wrap justify-end gap-2 pt-2">

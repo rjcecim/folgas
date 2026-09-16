@@ -10,6 +10,7 @@ import { BANK_HOURS_DOC, COLLECTIONS } from "./collections";
 const defaultSettings = (): BankHoursSettings => ({
   currentBalanceHours: DEFAULT_BANK_BALANCE_HOURS,
   dailyWorkHours: DEFAULT_DAILY_WORK_HOURS,
+  legacyMigrated: false,
   updatedAt: new Date().toISOString(),
 });
 
@@ -32,6 +33,7 @@ export function watchBankHours(callback: (settings: BankHoursSettings) => void) 
     callback({
       currentBalanceHours: Number(data.currentBalanceHours ?? 0),
       dailyWorkHours: Number(data.dailyWorkHours ?? DEFAULT_DAILY_WORK_HOURS),
+      legacyMigrated: Boolean(data.legacyMigrated),
       updatedAt: String(data.updatedAtIso ?? ""),
     });
   });

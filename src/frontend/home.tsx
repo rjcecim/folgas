@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { CalendarEvent } from "@/types";
 import { TYPE_LABELS } from "@/lib/constants";
 import { formatDateRange } from "@/lib/utils/dates";
+import { formatDuration } from "@/lib/utils/duration";
 import { formatHours } from "@/lib/utils/projection";
 import { usePlanner } from "@/features/planner/usePlanner";
 import { TYPE_COLOR } from "./colors";
@@ -34,11 +35,11 @@ export function HomeScreen() {
         <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm">
             <p>
-              <span className="text-soft">Agora </span>
-              <strong>{formatHours(planner.projection.currentBalanceHours)}</strong>
+              <span className="text-soft">Registrado </span>
+              <strong>{formatDuration(planner.projection.registeredMinutes)}</strong>
             </p>
             <p>
-              <span className="text-soft">Projetado </span>
+              <span className="text-soft">Confirmado hoje </span>
               <strong
                 className={
                   planner.projection.tone === "negative"
@@ -48,14 +49,19 @@ export function HomeScreen() {
                       : "text-accent"
                 }
               >
-                {formatHours(planner.projection.projectedBalanceHours)}
+                {formatDuration(planner.projection.confirmedMinutes)}
               </strong>
             </p>
             <p className="text-soft">
+              Pendente {formatDuration(planner.projection.pendingMinutes)} · perto{" "}
+              {formatDuration(planner.projection.nearExpiryMinutes)} · vencidas{" "}
+              {formatDuration(planner.projection.expiredMinutes)}
+            </p>
+            <p className="text-soft">
               {planner.dailyWorkHours} h/dia
-              {planner.projection.hoursStillNeeded > 0
-                ? ` · faltam ${planner.projection.hoursStillNeeded} h`
-                : " · coberto"}
+              {planner.projection.minutesStillNeeded > 0
+                ? ` · faltam ${formatDuration(planner.projection.minutesStillNeeded)} com validade`
+                : ""}
             </p>
           </div>
           <Link href="/cadastro/">
