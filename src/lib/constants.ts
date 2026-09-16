@@ -49,7 +49,7 @@ export function calendarYears(extraYears: number[] = []) {
   return [...years].sort((a, b) => a - b);
 }
 
-export const WEEKDAY_LABELS = ["Sáb", "Seg", "Ter", "Qua", "Qui", "Sex", "Dom"];
+export const WEEKDAY_LABELS = ["Sáb", "Dom", "Seg", "Ter", "Qua", "Qui", "Sex"];
 
 export const MONTH_LABELS = [
   "Janeiro",

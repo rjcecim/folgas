@@ -2,7 +2,7 @@
 
 import type { CalendarEvent } from "@/types";
 import { MONTH_LABELS, WEEKDAY_LABELS, calendarYears } from "@/lib/constants";
-import { daysInMonthGrid, isDateInRange, isWeekend, todayISO } from "@/lib/utils/dates";
+import { daysInMonthGrid, isDateInRange, isWeekend, parseISODate, todayISO } from "@/lib/utils/dates";
 import { TYPE_COLOR } from "./colors";
 import { Btn } from "./ui";
 
@@ -67,32 +67,36 @@ export function MonthGrid({
             {label}
           </div>
         ))}
-        {cells.map((date, index) => {
-          if (!date) {
-            return <div key={`empty-${index}`} className="min-h-28 rounded-2xl ring-1 ring-hair/50" />;
-          }
-
+        {cells.map((cell) => {
           const dayEvents = events.filter((event) =>
-            isDateInRange(date, event.startDate, event.endDate),
+            isDateInRange(cell.date, event.startDate, event.endDate),
           );
-          const isToday = date === today;
-          const muted = isWeekend(date);
+          const isToday = cell.date === today;
+          const outside = !cell.inMonth;
+          const muted = outside || isWeekend(cell.date);
+          const date = parseISODate(cell.date);
+          const monthHint = MONTH_LABELS[date.getMonth()].slice(0, 3).toLowerCase();
 
           return (
             <div
-              key={date}
-              className={`min-h-28 rounded-2xl bg-white px-2 py-2 ring-1 ${
-                isToday ? "ring-accent" : "ring-hair"
-              } ${muted ? "text-soft" : ""}`}
+              key={cell.date}
+              className={`min-h-28 rounded-2xl px-2 py-2 ring-1 ${
+                outside ? "bg-white/45" : "bg-white"
+              } ${isToday ? "ring-accent" : outside ? "ring-hair/60" : "ring-hair"} ${
+                muted ? "text-soft" : ""
+              }`}
             >
-              <span
-                className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-sm ${
-                  isToday ? "bg-accent font-semibold text-white" : ""
-                }`}
-              >
-                {Number(date.slice(-2))}
-              </span>
-              <div className="mt-1 space-y-1">
+              <div className="flex items-center gap-1">
+                <span
+                  className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-sm ${
+                    isToday ? "bg-accent font-semibold text-white" : ""
+                  } ${outside && !isToday ? "opacity-60" : ""}`}
+                >
+                  {date.getDate()}
+                </span>
+                {outside ? <span className="text-[11px] text-soft">{monthHint}</span> : null}
+              </div>
+              <div className={`mt-1 space-y-1 ${outside ? "opacity-60" : ""}`}>
                 {dayEvents.slice(0, 3).map((event) => (
                   <button
                     key={event.id}

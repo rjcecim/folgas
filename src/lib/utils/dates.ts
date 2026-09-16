@@ -73,30 +73,26 @@ export function saturdayOfWeek(date: Date): Date {
   return saturday;
 }
 
-export function daysInMonthGrid(year: number, month: number): (string | null)[] {
+export type MonthGridCell = {
+  date: string;
+  inMonth: boolean;
+};
+
+export function daysInMonthGrid(year: number, month: number): MonthGridCell[] {
   const first = startOfMonth(year, month);
   const last = endOfMonth(year, month);
-  const cells: (string | null)[] = [];
+  const cells: MonthGridCell[] = [];
   const cursor = saturdayOfWeek(first);
-  const lastSaturday = saturdayOfWeek(last);
 
-  while (cursor <= lastSaturday) {
-    const saturday = toISODate(cursor);
-    const row = [
-      saturday,
-      addDays(saturday, 2),
-      addDays(saturday, 3),
-      addDays(saturday, 4),
-      addDays(saturday, 5),
-      addDays(saturday, 6),
-      addDays(saturday, 1),
-    ];
-
-    for (const iso of row) {
-      const date = parseISODate(iso);
-      cells.push(date.getFullYear() === year && date.getMonth() === month ? iso : null);
+  while (cursor <= last) {
+    for (let offset = 0; offset < 7; offset += 1) {
+      const date = new Date(cursor);
+      date.setDate(cursor.getDate() + offset);
+      cells.push({
+        date: toISODate(date),
+        inMonth: date.getFullYear() === year && date.getMonth() === month,
+      });
     }
-
     cursor.setDate(cursor.getDate() + 7);
   }
 
